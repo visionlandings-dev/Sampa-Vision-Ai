@@ -1,58 +1,19 @@
-export type PlanId = "free" | "pro" | "enterprise";
-export type BillingCycle = "monthly" | "annual";
-export type TestimonialSize = "wide" | "tall" | "small";
-export type FeatureSize = "large" | "small";
-export type DemoStepId = "brief" | "generate" | "preview" | "publish";
+import React from 'react';
 
-export interface Plan {
-  id: PlanId;
-  name: string;
-  price: { monthly: number | null; annual: number | null };
-  desc: string;
-  cta: string;
-  ctaHref: string;
-  featured: boolean;
-  features: readonly string[];
-  missing: readonly string[];
+export default function Page() {
+  return (
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: '100vh', 
+      fontFamily: 'sans-serif',
+      backgroundColor: '#0f172a',
+      color: '#ffffff'
+    }}>
+      <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Sampa Vision AI</h1>
+      <p style={{ color: '#94a3b8', fontSize: '1.2rem' }}>Seu projeto Next.js foi configurado com sucesso!</p>
+    </div>
+  );
 }
-
-export interface Testimonial {
-  id: string;
-  size: TestimonialSize;
-  quote: string;
-  author: string;
-  role: string;
-  company: string;
-  initials: string;
-  metric: string;
-}
-
-export interface Feature {
-  id: string;
-  size: FeatureSize;
-  icon: string;
-  title: string;
-  subtitle: string;
-  desc: string;
-  badge: string | null;
-}
-
-export interface DemoStep {
-  id: DemoStepId;
-  label: string;
-  title: string;
-  desc: string;
-  logs: readonly string[];
-}
-
-export interface Objection {
-  question: string;
-  answer: string;
-}
-
-export interface Stat {
-  value: string;
-  label: string;
-}
-
-export default function NextPageFix() { return <Page /> }
