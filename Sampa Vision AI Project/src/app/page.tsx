@@ -54,3 +54,5 @@ export interface Stat {
   value: string;
   label: string;
 }
+
+export default function NextPageFix() { return <Page /> }
