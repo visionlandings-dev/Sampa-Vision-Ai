@@ -30,15 +30,15 @@ export const HERO_FRICTION_KILLERS = [
 ]
 
 export const TERMINAL_STEPS = [
-  { icon: '→', text: 'Lendo perfil de marca...',        delay: 0.4 },
-  { icon: '→', text: 'Identificando público-alvo...',  delay: 0.9 },
-  { icon: '✓', text: 'Briefing analisado',              delay: 1.4 },
-  { icon: '→', text: 'Estruturando hierarquia...',      delay: 1.8 },
-  { icon: '→', text: 'Gerando headline principal...',   delay: 2.3 },
-  { icon: '✓', text: 'Copy gerado (3 variações)',       delay: 2.8 },
-  { icon: '→', text: 'Aplicando identidade visual...',  delay: 3.2 },
-  { icon: '✓', text: 'Layout aplicado',                 delay: 3.7 },
-  { icon: '→', text: 'Publicando...',                   delay: 4.1 },
+  { icon: '→', text: 'Lendo perfil de marca...', delay: 0.4, isResult: false },
+  { icon: '→', text: 'Identificando público-alvo...', delay: 0.9, isResult: false },
+  { icon: '✓', text: 'Briefing analisado', delay: 1.4, isResult: false },
+  { icon: '→', text: 'Estruturando hierarquia...', delay: 1.8, isResult: false },
+  { icon: '→', text: 'Gerando headline principal...', delay: 2.3, isResult: false },
+  { icon: '✓', text: 'Copy gerado (3 variações)', delay: 2.8, isResult: false },
+  { icon: '→', text: 'Aplicando identidade visual...', delay: 3.2, isResult: false },
+  { icon: '✓', text: 'Layout aplicado', delay: 3.7, isResult: false },
+  { icon: '→', text: 'Publicando...', delay: 4.1, isResult: false },
   { icon: '↗', text: 'clinica-sp.sampa.vision — 58s', delay: 4.6, isResult: true },
 ] as const
 

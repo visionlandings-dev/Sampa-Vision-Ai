@@ -5,9 +5,7 @@ import './globals.css'
 // ── FONTE INTER via next/font (otimizado, sem CLS) ───────────────────────
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
   display: 'swap',
-  weight: ['300', '400', '500', '600'],
 })
 
 // ── METADATA COMPLETA — SEO + Open Graph + Twitter ───────────────────────
@@ -119,23 +117,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        {/* Preconnect para fontes */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Syne via link (não disponível no next/font para todos os pesos) */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
         {/* Schema.org */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-void text-bone antialiased">
+      <body className={inter.className}>
         {/* Skip to main content — acessibilidade */}
         <a
           href="#main-content"
