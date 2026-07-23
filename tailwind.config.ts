@@ -25,10 +25,10 @@ const config: Config = {
 
         // Brand accent — azul elétrico
         electric: {
-          DEFAULT: '#0066FF',
-          hover:   '#3385FF',
-          dim:     '#0044CC',
-          glow:    'rgba(0, 102, 255, 0.12)',
+          DEFAULT: '#00BFFF',
+          hover:   '#33CFFF',
+          dim:     '#0080CC',
+          glow:    'rgba(0, 191, 255, 0.12)',
         },
 
         // Semânticos — status
@@ -40,7 +40,7 @@ const config: Config = {
         // Bordas
         border: {
           DEFAULT: 'rgba(100, 100, 180, 0.12)',
-          active:  'rgba(0, 102, 255, 0.35)',
+          active:  'rgba(0, 191, 255, 0.35)',
         },
       },
 
@@ -110,7 +110,7 @@ const config: Config = {
           linear-gradient(rgba(100, 100, 180, 0.06) 1px, transparent 1px),
           linear-gradient(90deg, rgba(100, 100, 180, 0.06) 1px, transparent 1px)
         `,
-        'glow-blue':    'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0, 102, 255, 0.15), transparent)',
+        'glow-blue':    'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0, 191, 255, 0.15), transparent)',
         'glow-purple':  'radial-gradient(ellipse 40% 40% at 80% 60%, rgba(120, 0, 255, 0.06), transparent)',
       },
 
@@ -119,9 +119,9 @@ const config: Config = {
       },
 
       boxShadow: {
-        'glow-sm': '0 0 12px rgba(0, 102, 255, 0.3)',
-        'glow-md': '0 0 24px rgba(0, 102, 255, 0.3), 0 4px 24px rgba(0, 102, 255, 0.2)',
-        'glow-lg': '0 0 40px rgba(0, 102, 255, 0.4), 0 8px 40px rgba(0, 102, 255, 0.3)',
+        'glow-sm': '0 0 12px rgba(0, 191, 255, 0.3)',
+        'glow-md': '0 0 24px rgba(0, 191, 255, 0.3), 0 4px 24px rgba(0, 191, 255, 0.2)',
+        'glow-lg': '0 0 40px rgba(0, 191, 255, 0.4), 0 8px 40px rgba(0, 191, 255, 0.3)',
       },
     },
   },
