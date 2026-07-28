@@ -105,3 +105,75 @@ export interface TerminalStep {
   delay: number
   isResult?: boolean
 }
+
+// ── BRIEFING DE 7 PERGUNTAS ───────────────────────────────────────────────
+
+/** Os 7 campos do briefing — espelha exatamente a Esteira V2 */
+export interface BriefingAnswers {
+  produto: string        // 1. Produto ou serviço principal
+  publico: string        // 2. Cliente ideal
+  dor: string             // 3. Maior dor/problema
+  diferencial: string     // 4. Principal diferencial competitivo
+  beneficios: string      // 5. 3 maiores benefícios práticos
+  oferta: string           // 6. Oferta ou condição especial
+  cta: string               // 7. Ação única ao clicar no botão
+}
+
+export type BriefingField = keyof BriefingAnswers
+
+/**
+ * Extensão opcional ao LandingBriefingContract (seção 10: "Extensibilidade" —
+ * declarativa, identificável, fora do núcleo canônico de 7 campos). Não
+ * altera o contrato original; só enriquece o prompt quando o visitante
+ * preenche. Também é a base para o perfil de marca que Vision Branding e
+ * Vision Intelligence vão reaproveitar futuramente.
+ */
+export interface BriefingExtras {
+  concorrentes?: string
+  referencia?: string
+}
+
+export interface BriefingQuestion {
+  field: BriefingField
+  number: number
+  question: string
+  placeholder: string
+  helper: string
+  minLength: number
+}
+
+/** Pergunta opcional — sem minLength, campo de BriefingExtras */
+export interface ExtraQuestion {
+  field: keyof BriefingExtras
+  question: string
+  placeholder: string
+  helper: string
+}
+
+/** Estado de cada etapa enquanto a IA gera a página */
+export type GenerationStepStatus = 'pending' | 'active' | 'done' | 'error'
+
+export interface GenerationStep {
+  id: string
+  label: string
+  status: GenerationStepStatus
+}
+
+/** Página gerada pela IA — saída estruturada via tags */
+export interface GeneratedPage {
+  heroTitle: string
+  heroSubtitle: string
+  heroCta: string
+  painPoints: string[]
+  benefits: { title: string; description: string }[]
+  socialProofHook: string
+  offerSection: string
+  footerCta: string
+}
+
+/** Eventos enviados via SSE do servidor para o cliente */
+export type GenerationEvent =
+  | { type: 'status'; step: string; label: string }
+  | { type: 'delta'; text: string }
+  | { type: 'complete'; page: GeneratedPage; elapsedMs: number }
+  | { type: 'error'; message: string }

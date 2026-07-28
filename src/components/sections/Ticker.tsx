@@ -19,7 +19,7 @@ export function Ticker() {
             key={`${item}-${i}`}
             className="inline-flex items-center gap-3 px-8 font-mono text-mono-sm uppercase tracking-[0.2em] text-ash"
           >
-            <span className="w-1 h-1 rounded-full bg-electric shadow-[0_0_6px_rgba(0,102,255,0.8)]" />
+            <span className="w-1 h-1 rounded-full bg-electric shadow-[0_0_6px_rgba(0,191,255,0.8)]" />
             {item}
           </span>
         ))}

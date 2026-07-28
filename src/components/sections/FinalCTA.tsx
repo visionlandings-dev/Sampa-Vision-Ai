@@ -22,9 +22,9 @@ export function FinalCTA() {
           />
 
           <h2 className="font-display font-extrabold text-display-lg text-bone mb-2 leading-[0.95]">
-            Sua primeira página
+            Seu primeiro rascunho
             <br />
-            publicada em 60 segundos.
+            pronto em segundos.
           </h2>
           <p className="font-display font-extrabold text-display-lg text-electric mb-8 leading-[0.95]">
             Grátis. Agora.

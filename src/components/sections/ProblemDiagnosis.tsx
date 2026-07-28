@@ -41,7 +41,7 @@ export function ProblemDiagnosis() {
             Isso tem nome: é o buraco no funil.
           </p>
           <p className="font-display font-semibold text-display-sm text-electric mt-1">
-            Sampa Vision AI fecha esse buraco. Em 60 segundos.
+            Sampa Vision AI fecha esse buraco. Rascunho em segundos.
           </p>
         </div>
       </div>

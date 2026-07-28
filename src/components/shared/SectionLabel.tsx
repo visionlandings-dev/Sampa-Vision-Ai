@@ -22,7 +22,7 @@ export function SectionLabel({ children, className }: SectionLabelProps) {
     >
       {/* Linha elétrica — 16px */}
       <span
-        className="inline-block w-4 h-px bg-electric shadow-[0_0_6px_rgba(0,102,255,0.8)]"
+        className="inline-block w-4 h-px bg-electric shadow-[0_0_6px_rgba(0,191,255,0.8)]"
         aria-hidden="true"
       />
       {children}

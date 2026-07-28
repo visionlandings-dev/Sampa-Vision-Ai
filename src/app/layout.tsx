@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sampa.vision'),
 
   title: {
-    default: 'Sampa Vision AI — Páginas que convertem em 60 segundos',
+    default: 'Sampa Vision AI — Do briefing ao rascunho em segundos',
     template: '%s | Sampa Vision AI',
   },
   description:
-    'Plataforma de Inteligência Artificial para marketing digital. Gere landing pages de alta conversão, copy estratégico e identidade visual com IA. De um briefing de 7 perguntas para uma página publicada em menos de 60 segundos.',
+    'Plataforma de Inteligência Artificial para marketing digital. Gere landing pages de alta conversão, copy estratégico e identidade visual com IA. De um briefing de 7 perguntas para um rascunho em segundos — versão final entregue em até 72 horas.',
 
   keywords: [
     'landing page IA',
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: 'https://sampa.vision',
     siteName: 'Sampa Vision AI',
-    title: 'Sampa Vision AI — Páginas que convertem em 60 segundos',
+    title: 'Sampa Vision AI — Do briefing ao rascunho em segundos',
     description:
-      'Plataforma de IA para marketing digital. Landing pages de alta conversão geradas em segundos.',
+      'Plataforma de IA para marketing digital. Landing pages de alta conversão: rascunho em segundos, versão final em até 72 horas.',
     images: [
       {
         url: '/og-image.png',
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
   // Twitter/X
   twitter: {
     card: 'summary_large_image',
-    title: 'Sampa Vision AI — Páginas que convertem em 60 segundos',
+    title: 'Sampa Vision AI — Do briefing ao rascunho em segundos',
     description:
-      'Plataforma de IA para marketing digital. Landing pages de alta conversão geradas em segundos.',
+      'Plataforma de IA para marketing digital. Landing pages de alta conversão: rascunho em segundos, versão final em até 72 horas.',
     images: ['/og-image.png'],
   },
 
@@ -105,7 +105,7 @@ const jsonLd = {
   operatingSystem: 'Web',
   offers: {
     '@type': 'Offer',
-    price: '97',
+    price: '497',
     priceCurrency: 'BRL',
   },
 }

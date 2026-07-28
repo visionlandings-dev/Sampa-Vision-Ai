@@ -51,7 +51,7 @@
 
   /* Seleção de texto */
   ::selection {
-    background: rgba(0, 102, 255, 0.25);
+    background: rgba(0, 191, 255, 0.25);
     color: #fff;
   }
 
@@ -59,7 +59,7 @@
   ::-webkit-scrollbar        { width: 6px; }
   ::-webkit-scrollbar-track  { background: #0A0A0F; }
   ::-webkit-scrollbar-thumb  { background: #2C2C3E; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #0066FF; }
+  ::-webkit-scrollbar-thumb:hover { background: #00BFFF; }
 }
 
 /* ── UTILITIES CUSTOMIZADAS ─────────────────────────────────────────────── */
@@ -84,14 +84,14 @@
 
   /* Border elétrico */
   .border-electric-top {
-    border-top: 1px solid rgba(0, 102, 255, 0.35);
+    border-top: 1px solid rgba(0, 191, 255, 0.35);
   }
 
   /* Glow de fundo */
   .glow-blue {
     background: radial-gradient(
       ellipse 60% 50% at 50% 0%,
-      rgba(0, 102, 255, 0.12),
+      rgba(0, 191, 255, 0.12),
       transparent
     );
   }

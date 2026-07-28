@@ -11,10 +11,10 @@ export function ProcessSteps() {
       <div className="container-main">
         <SectionLabel>Como funciona</SectionLabel>
         <h2 className="font-display font-bold text-display-md text-bone mt-4 mb-2">
-          De zero a publicado.
+          De zero a pronto.
         </h2>
         <p className="font-body text-body-lg text-fog mb-12">
-          Em menos de 5 minutos.
+          Rascunho em segundos. Versão final em até 72h.
         </p>
 
         {/* Grid de 4 etapas com conectores */}
@@ -46,11 +46,11 @@ export function ProcessSteps() {
         {/* Total — transparência radical */}
         <div className="mt-8 pt-6 border-t border-[rgba(100,100,180,0.12)]">
           <p className="font-mono text-mono-sm text-ash">
-            Total:{' '}
+            Rascunho pronto em{' '}
             <span className="text-bone font-medium">
-              menos de 5 minutos
+              segundos
             </span>{' '}
-            do briefing à página publicada.
+            · versão final em até 72h.
           </p>
         </div>
       </div>

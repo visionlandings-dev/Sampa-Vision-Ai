@@ -59,12 +59,12 @@ export function Hero() {
             </motion.span>
             <motion.span
               className="block text-electric"
-              style={{ textShadow: '0 0 40px rgba(0,102,255,0.4)' }}
+              style={{ textShadow: '0 0 40px rgba(0,191,255,0.4)' }}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              Em 60 segundos.
+              Em segundos.
             </motion.span>
           </h1>
 
@@ -75,8 +75,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.65 }}
             className="text-body-lg text-fog max-w-md mb-8 leading-relaxed"
           >
-            De um briefing de 7 perguntas para uma página publicada.
-            Sem agência. Sem código. Sem espera.
+            De um briefing de 7 perguntas para um rascunho pronto.
+            Sem agência. Sem código. Versão final em até 72h.
           </motion.p>
 
           {/* CTA único */}
