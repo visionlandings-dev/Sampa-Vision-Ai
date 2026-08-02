@@ -77,12 +77,12 @@ export function Navbar() {
               Operacional
             </div>
 
-            <Link
-              href="/auth/login"
-              className="font-mono text-mono-sm uppercase tracking-[0.18em] text-ash hover:text-bone transition-colors duration-200"
-            >
-              Entrar
-            </Link>
+            <Button asChild size="sm">
+              <Link href="/briefing">
+                Começar grátis
+                <ArrowRight className="w-3 h-3" aria-hidden="true" />
+              </Link>
+            </Button>
 
             <Button asChild size="sm">
               <Link href="/auth/signup">
@@ -133,13 +133,8 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="pt-4 border-t border-[rgba(100,100,180,0.12)] flex flex-col gap-3">
-                <Button variant="ghost" size="md" asChild>
-                  <Link href="/auth/login" onClick={() => setMobileOpen(false)}>
-                    Entrar
-                  </Link>
-                </Button>
                 <Button size="md" asChild>
-                  <Link href="/auth/signup" onClick={() => setMobileOpen(false)}>
+                  <Link href="/briefing" onClick={() => setMobileOpen(false)}>
                     Começar grátis
                     <ArrowRight className="w-3 h-3" />
                   </Link>
