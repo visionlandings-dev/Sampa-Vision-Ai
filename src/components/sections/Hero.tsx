@@ -184,8 +184,6 @@ function AITerminal() {
               className={
                 step.icon === '✓'
                   ? 'text-success w-3 flex-shrink-0'
-                  : step.icon === '↗'
-                  ? 'text-electric w-3 flex-shrink-0'
                   : 'text-ash w-3 flex-shrink-0'
               }
               aria-hidden="true"
