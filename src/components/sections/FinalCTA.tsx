@@ -57,7 +57,6 @@ export function FinalCTA() {
               Falar com humano →
             </a>
           </div>
-          </div>
         </div>
       </div>
     </AnimatedSection>
