@@ -13,7 +13,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Produto',     href: '#produto' },
   { label: 'Tecnologia',  href: '#cerebro' },
   { label: 'Preços',      href: '#precos' },
-  { label: 'Docs',        href: '/docs', external: true },
 ]
 
 // ── HERO ──────────────────────────────────────────────────────────────────
