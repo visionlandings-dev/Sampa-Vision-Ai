@@ -86,7 +86,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.8 }}
           >
             <Button size="xl" asChild>
-              <Link href="/auth/signup">
+              <Link href="/briefing">
                 Gerar minha primeira página
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
