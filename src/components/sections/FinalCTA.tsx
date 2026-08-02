@@ -53,12 +53,10 @@ export function FinalCTA() {
           </ul>
 
           <div className="pt-6 border-t border-[rgba(100,100,180,0.12)] flex items-center justify-center gap-6 font-mono text-mono-sm">
-            <Link href="/auth/login" className="text-ash hover:text-bone transition-colors">
-              Já tem conta? Entrar →
-            </Link>
-            <Link href="/contato" className="text-ash hover:text-bone transition-colors">
+            <a href="mailto:contato.sampa@icloud.com" className="text-ash hover:text-bone transition-colors">
               Falar com humano →
-            </Link>
+            </a>
+          </div>
           </div>
         </div>
       </div>
