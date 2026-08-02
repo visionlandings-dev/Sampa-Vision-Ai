@@ -30,8 +30,8 @@ export function FinalCTA() {
             Grátis. Agora.
           </p>
 
-          <Button size="xl" asChild className="mb-8">
-            <Link href="/auth/signup">
+         <Button size="xl" asChild className="mb-8">
+            <Link href="/briefing">
               Responder o briefing (2 minutos)
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
