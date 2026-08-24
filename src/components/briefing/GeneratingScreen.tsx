@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, AlertCircle, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { useGeneratePage } from '@/hooks/useGeneratePage'
-import { attachDraftToLead } from '@/lib/supabase'
 import type { BriefingAnswers, BriefingExtras } from '@/types'
 
 export function GeneratingScreen() {
@@ -41,14 +40,6 @@ export function GeneratingScreen() {
     if (status === 'done' && page) {
       sessionStorage.setItem('sv_generated_page', JSON.stringify(page))
       sessionStorage.setItem('sv_elapsed_ms', String(elapsedMs))
-
-      // Anexa o rascunho ao lead já criado no passo de contato. Se o
-      // registro do lead tiver falhado antes (Supabase indisponível), não
-      // há leadId — seguimos sem travar o visitante, só sem persistência.
-      const leadId = sessionStorage.getItem('sv_lead_id')
-      if (leadId) {
-        attachDraftToLead(leadId, page)
-      }
     }
   }, [status, page, elapsedMs])
 
