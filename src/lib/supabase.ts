@@ -15,7 +15,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
 /**
  * Client público (anon key). Usado só no browser, só para:
  *  - inserir um novo lead (briefing + contato) assim que o wizard é enviado
- *  - atualizar esse mesmo lead com o rascunho gerado, quando a IA termina
  *
  * A leitura (SELECT) é bloqueada por RLS para o papel `anon` — consulte os
  * leads direto pelo painel do Supabase (Table Editor) usando sua conta,
@@ -50,30 +49,13 @@ export interface LeadRow extends LeadInsert {
 }
 
 /** Grava o lead assim que o briefing é enviado — antes mesmo da IA rodar. */
-export async function createLead(input: LeadInsert): Promise<string | null> {
-  const { data, error } = await supabase
+export async function createLead(input: LeadInsert): Promise<void> {
+  const { error } = await supabase
     .from('leads')
     .insert(input)
-    .select('id')
-    .single()
 
   if (error) {
     // eslint-disable-next-line no-console
     console.error('[supabase] Falha ao gravar lead:', error.message)
-    return null
-  }
-  return data?.id ?? null
-}
-
-/** Atualiza o lead com o rascunho gerado assim que a IA termina. */
-export async function attachDraftToLead(leadId: string, draftPage: unknown) {
-  const { error } = await supabase
-    .from('leads')
-    .update({ draft_page: draftPage })
-    .eq('id', leadId)
-
-  if (error) {
-    // eslint-disable-next-line no-console
-    console.error('[supabase] Falha ao anexar rascunho ao lead:', error.message)
   }
 }

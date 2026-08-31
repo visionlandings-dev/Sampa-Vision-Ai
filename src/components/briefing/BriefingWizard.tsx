@@ -94,14 +94,13 @@ export function BriefingWizard() {
       ...answers,
       ...cleanExtras,
     })
-      .then((leadId) => {
+      .then(() => {
         // Mesmo se o registro falhar (ex: Supabase fora do ar), não travamos
         // o visitante — ele já preencheu tudo e quer ver o rascunho. O lead
         // é o "nice to have" de analytics/follow-up, não um bloqueio de UX.
         sessionStorage.setItem('sv_briefing', JSON.stringify(answers))
         sessionStorage.setItem('sv_extras', JSON.stringify(cleanExtras))
         sessionStorage.setItem('sv_contact', JSON.stringify({ email: email.trim(), whatsapp: whatsapp.trim() || null }))
-        if (leadId) sessionStorage.setItem('sv_lead_id', leadId)
         router.push('/briefing/gerando')
       })
       .finally(() => setSubmitting(false))
