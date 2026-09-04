@@ -1,64 +1,64 @@
-import Link from 'next/link'
-import { ArrowRight, Check } from 'lucide-react'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { Button } from '@/components/ui/Button'
+'use client'
 
-const GUARANTEES = [
-  'Sem cartão de crédito',
-  'Primeira landing page grátis',
-  'Cancela quando quiser',
-  'Suporte em português',
-]
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/Button'
+import { SectionLabel } from '@/components/ui/SectionLabel'
+
+const ease = [0.16, 1, 0.3, 1] as const
 
 export function FinalCTA() {
   return (
-    <AnimatedSection className="py-section-sm md:py-section border-t border-[rgba(100,100,180,0.12)]">
+    <motion.section
+      className="py-section-sm md:py-section border-t border-[rgba(100,100,180,0.12)]"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.7, ease }}
+    >
       <div className="container-main">
         <div className="bg-well border border-electric/15 p-8 md:p-16 text-center relative overflow-hidden">
           {/* Linha de glow no topo */}
-          <span
-            className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric to-transparent"
-            aria-hidden="true"
+          <div
+            className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric/50 to-transparent"
+            aria-hidden
           />
 
-          <h2 className="font-display font-extrabold text-display-lg text-bone mb-2 leading-[0.95]">
-            Seu primeiro rascunho
-            <br />
-            pronto em segundos.
+          <SectionLabel className="justify-center mb-6">Comece agora</SectionLabel>
+
+          <h2 className="font-display font-bold text-display-lg text-bone mb-4 max-w-2xl mx-auto">
+            Sua primeira landing page gerada por IA em{' '}
+            <span className="text-electric">menos de 60 segundos</span>
           </h2>
-          <p className="font-display font-extrabold text-display-lg text-electric mb-8 leading-[0.95]">
-            Grátis. Agora.
+
+          <p className="text-body-md text-text-secondary max-w-lg mx-auto mb-10">
+            Sem agência. Sem código. Sem espera de 3 semanas.
+            Responda 7 perguntas e a Aurora gera, publica e ativa sua página.
           </p>
 
-         <Button size="xl" asChild className="mb-8">
-            <Link href="/briefing">
-              Responder o briefing (2 minutos)
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <Button asChild size="lg">
+              <Link href="#contato">
+                Gerar minha primeira página
+                <ArrowRight className="w-4 h-4" aria-hidden />
+              </Link>
+            </Button>
+            <Button asChild variant="ghost" size="lg">
+              <Link href="#produto">Ver demonstração</Link>
+            </Button>
+          </div>
 
-          <ul
-            className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8"
-            aria-label="Garantias"
-          >
-            {GUARANTEES.map((item) => (
-              <li
-                key={item}
-                className="flex items-center gap-1.5 font-mono text-mono-sm text-ash"
-              >
-                <Check className="w-3 h-3 text-electric flex-shrink-0" aria-hidden="true" />
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {['Sem cartão de crédito', 'Primeira página grátis', 'Cancela quando quiser'].map((item) => (
+              <span key={item} className="flex items-center gap-2 font-mono text-mono-sm text-text-tertiary">
+                <span className="text-success" aria-hidden>✓</span>
                 {item}
-              </li>
+              </span>
             ))}
-          </ul>
-
-          <div className="pt-6 border-t border-[rgba(100,100,180,0.12)] flex items-center justify-center gap-6 font-mono text-mono-sm">
-            <a href="mailto:contato.sampa@icloud.com" className="text-ash hover:text-bone transition-colors">
-              Falar com humano →
-            </a>
           </div>
         </div>
       </div>
-    </AnimatedSection>
+    </motion.section>
   )
 }
