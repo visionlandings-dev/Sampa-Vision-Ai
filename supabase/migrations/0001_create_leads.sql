@@ -47,15 +47,13 @@ create policy "anon pode inserir lead"
   to anon
   with check (true);
 
--- Permite que o próprio fluxo (ainda anônimo) atualize o rascunho gerado
--- do lead que acabou de criar. Restrito a alterar apenas draft_page/status,
--- não os dados do briefing em si.
-create policy "anon pode anexar rascunho"
-  on leads
-  for update
-  to anon
-  using (true)
-  with check (true);
+-- Menor privilégio explícito desde a criação da tabela.
+-- Visitantes anônimos podem apenas inserir novos leads.
+-- Leitura, atualização e exclusão permanecem reservadas ao backend confiável.
+revoke all privileges on table public.leads from public;
+revoke all privileges on table public.leads from anon;
+revoke all privileges on table public.leads from authenticated;
 
+grant insert on table public.leads to anon;
 create index if not exists leads_created_at_idx on leads (created_at desc);
 create index if not exists leads_status_idx on leads (status);

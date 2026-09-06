@@ -1,13 +1,8 @@
--- Security hardening: an anonymous browser must never update lead records.
+-- Defense-in-depth for legacy or partially initialized environments.
 --
--- Migration 0001 allowed every `anon` request to update every row because
--- both the USING and WITH CHECK expressions were `true`. PostgreSQL RLS
--- cannot infer that a UUID stored by a browser identifies the original
--- submitter, nor can that policy restrict updates to selected columns.
---
--- Draft persistence is intentionally disabled until it is moved behind a
--- trusted server-side boundary with an explicit capability or authenticated
--- ownership model. Lead intake through INSERT remains unchanged.
+-- The secure baseline in migration 0001 does not create an anonymous UPDATE
+-- policy. These statements remain idempotent to harden databases that may
+-- have received the historical permissive policy.
 
 drop policy if exists "anon pode anexar rascunho" on public.leads;
 
