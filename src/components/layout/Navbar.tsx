@@ -83,13 +83,6 @@ export function Navbar() {
                 <ArrowRight className="w-3 h-3" aria-hidden="true" />
               </Link>
             </Button>
-
-            <Button asChild size="sm">
-              <Link href="/auth/signup">
-                Começar grátis
-                <ArrowRight className="w-3 h-3" aria-hidden="true" />
-              </Link>
-            </Button>
           </div>
 
           {/* ── TOGGLE MOBILE ── */}
