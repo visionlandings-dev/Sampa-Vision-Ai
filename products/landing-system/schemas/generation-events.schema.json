@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gs-oif:schema:landing-system:generation-events:v1",
+  "title": "GenerationEvent",
+  "description": "O campo page mantém o nome do MVP por compatibilidade, mas referencia o LandingContentIR. União discriminada por 'type', conforme o GenerationEvent do MVP (src/types/index.ts), transportada via SSE.",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["type", "step", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "type":  { "const": "status" },
+        "step":  { "type": "string" },
+        "label": { "type": "string" }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["type", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "delta" },
+        "text": { "type": "string" }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["type", "page", "elapsedMs"],
+      "additionalProperties": false,
+      "properties": {
+        "type":      { "const": "complete" },
+        "page":      { "$ref": "urn:gs-oif:schema:landing-system:content-ir:v1" },
+        "elapsedMs": { "type": "integer", "minimum": 0 }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["type", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "type":    { "const": "error" },
+        "message": { "type": "string" }
+      }
+    }
+  ]
+}

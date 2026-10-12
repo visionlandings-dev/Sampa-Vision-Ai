@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gs-oif:schema:landing-system:briefing:v1",
+  "title": "LandingBriefingContract",
+  "description": "Contract ID gs-oif.product.landing-system.briefing, versão 1.0.0-draft. Limites minLength refletem a interface do MVP (ADR-008). Pré-condição: todas as respostas textuais são normalizadas por remoção de espaços periféricos (trim) antes da aplicação de minLength (Loader -> Normalizer -> Validator). O pattern \\\\S é proteção adicional e não substitui a normalização.",
+  "type": "object",
+  "required": [
+    "answers"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "answers": {
+      "type": "object",
+      "required": [
+        "produto",
+        "publico",
+        "dor",
+        "diferencial",
+        "beneficios",
+        "oferta",
+        "cta"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "produto": {
+          "type": "string",
+          "minLength": 10,
+          "description": "O que você vende?",
+          "pattern": "\\S"
+        },
+        "publico": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Quem é o cliente ideal?",
+          "pattern": "\\S"
+        },
+        "dor": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Qual é a maior dor antes de contratar?",
+          "pattern": "\\S"
+        },
+        "diferencial": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Por que escolher você e não o concorrente?",
+          "pattern": "\\S"
+        },
+        "beneficios": {
+          "type": "string",
+          "minLength": 15,
+          "description": "Quais são os três principais benefícios práticos? (uma única resposta textual)",
+          "pattern": "\\S"
+        },
+        "oferta": {
+          "type": "string",
+          "minLength": 8,
+          "description": "Existe alguma condição especial ou urgência?",
+          "pattern": "\\S"
+        },
+        "cta": {
+          "type": "string",
+          "minLength": 8,
+          "description": "Qual é a ação única do botão?",
+          "pattern": "\\S"
+        }
+      }
+    },
+    "extras": {
+      "$ref": "#/$defs/BriefingExtras"
+    }
+  },
+  "$defs": {
+    "BriefingExtras": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Extensões opcionais fora dos sete campos canônicos.",
+      "properties": {
+        "concorrentes": {
+          "type": "string"
+        },
+        "referencia": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
