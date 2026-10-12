@@ -1,0 +1,48 @@
+name: contracts
+
+on:
+  pull_request:
+    paths:
+      - 'products/landing-system/schemas/**'
+      - 'products/landing-system/contracts/**'
+      - 'scripts/validate-contracts.mjs'
+      - 'tests/contracts.test.mjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/contracts.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'products/landing-system/schemas/**'
+      - 'products/landing-system/contracts/**'
+      - 'scripts/validate-contracts.mjs'
+      - 'tests/contracts.test.mjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/contracts.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # A versão do pnpm é lida do campo "packageManager" do package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      # Exige pnpm-lock.yaml (criado no bootstrap governado do monorepo).
+      - run: pnpm install --frozen-lockfile
+
+      - name: Validar schemas e fixtures (Ajv2020, Draft 2020-12)
+        run: pnpm run validate:contracts
+
+      - name: Testes dos contratos
+        run: pnpm run test:contracts
