@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gs-oif:schema:landing-system:content-ir:v1",
+  "title": "LandingContentIR",
+  "description": "Baseado no GeneratedPage do MVP (src/types/index.ts). Conteúdo semântico apenas: sem estilos, classes ou tokens de design. Cardinalidade verificada pelo Validator (IR_COLLECTION_CARDINALITY_VIOLATION).",
+  "type": "object",
+  "required": ["heroTitle", "heroSubtitle", "heroCta", "painPoints", "benefits", "socialProofHook", "offerSection", "footerCta"],
+  "additionalProperties": false,
+  "properties": {
+    "heroTitle":       { "type": "string" },
+    "heroSubtitle":    { "type": "string" },
+    "heroCta":         { "type": "string" },
+    "painPoints":      { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "string" } },
+    "benefits": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["title", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "title":       { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "socialProofHook": { "type": "string" },
+    "offerSection":    { "type": "string" },
+    "footerCta":       { "type": "string" }
+  }
+}

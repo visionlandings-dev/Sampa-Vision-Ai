@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
-import { SectionLabel } from '@/components/ui/SectionLabel'
+import { SectionLabel } from '@/components/shared/SectionLabel'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
