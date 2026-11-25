@@ -20,7 +20,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
  * leads direto pelo painel do Supabase (Table Editor) usando sua conta,
  * não pela API pública.
  */
-export const supabase = createClient(supabaseUrl ?? '', supabaseAnonKey ?? '')
+// Desde a consolidação no Sampa-Core, as tabelas do Sampa Vision ficam no schema `vision`
+// (vision.leads, vision.events). O schema precisa estar em Data API > Exposed schemas.
+export const supabase = createClient(supabaseUrl ?? '', supabaseAnonKey ?? '', {
+  db: { schema: 'vision' },
+})
 
 export interface LeadInsert {
   email: string
