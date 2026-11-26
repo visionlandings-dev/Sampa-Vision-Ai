@@ -27,6 +27,8 @@ export const supabase = createClient(supabaseUrl ?? '', supabaseAnonKey ?? '', {
 })
 
 export interface LeadInsert {
+  /** Gerado no navegador (crypto.randomUUID) para o servidor anexar o rascunho depois. */
+  id?: string
   email: string
   whatsapp?: string | null
   produto: string
