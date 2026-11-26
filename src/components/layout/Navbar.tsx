@@ -56,7 +56,7 @@ export function Navbar() {
                 href={item.href}
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noopener noreferrer' : undefined}
-                className="font-mono text-mono-sm uppercase tracking-[0.18em] text-ash hover:text-bone transition-colors duration-200"
+                className="font-mono text-mono-sm uppercase tracking-[0.18em] text-fog hover:text-bone transition-colors duration-200"
               >
                 {item.label}
               </Link>
@@ -67,7 +67,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             {/* Status operacional */}
             <div
-              className="flex items-center gap-1.5 font-mono text-mono-xs uppercase tracking-[0.2em] text-ash"
+              className="flex items-center gap-1.5 font-mono text-mono-xs uppercase tracking-[0.2em] text-fog"
               aria-label="Status do sistema: Operacional"
             >
               <span

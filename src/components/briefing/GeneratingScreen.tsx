@@ -58,7 +58,7 @@ export function GeneratingScreen() {
               Aurora
             </span>
           </div>
-          <span className="font-mono text-mono-xs text-ash uppercase">
+          <span className="font-mono text-mono-xs text-fog uppercase">
             {status === 'generating' ? 'Gerando' : status === 'done' ? 'Concluído' : status === 'error' ? 'Erro' : 'Aguardando'}
           </span>
         </div>
