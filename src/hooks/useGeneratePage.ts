@@ -39,7 +39,7 @@ export function useGeneratePage() {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers, extras }),
+        body: JSON.stringify({ answers, extras, lead: readLeadRef() }),
         signal: controller.signal,
       })
 
@@ -112,5 +112,15 @@ function handleEvent(
     case 'error':
       setState((s) => ({ ...s, status: 'error', error: event.message }))
       break
+  }
+}
+
+/** id + e-mail do lead gravado no BriefingWizard (permite ao servidor salvar o rascunho). */
+function readLeadRef(): { id: string; email: string } | null {
+  try {
+    const raw = sessionStorage.getItem('sv_lead')
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
   }
 }
