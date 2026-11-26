@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowLeft } from 'lucide-react'
@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/Input'
 import { Progress } from '@/components/ui/Progress'
 import { BRIEFING_QUESTIONS, BRIEFING_EXTRA_QUESTIONS } from '@/config/content'
 import { createLead } from '@/lib/supabase'
+import { trackEvent } from '@/lib/events'
 import type { BriefingAnswers, BriefingExtras } from '@/types'
 
 const EMPTY_ANSWERS: BriefingAnswers = {
@@ -30,6 +31,11 @@ type WizardPhase = 'questions' | 'extras' | 'contact'
 export function BriefingWizard() {
   const router = useRouter()
   const [step, setStep] = useState(0)
+
+  // Funil: conta cada abertura do briefing (base do relatório de abandono)
+  useEffect(() => {
+    trackEvent('briefing_iniciado')
+  }, [])
   const [extraStep, setExtraStep] = useState(0)
   const [phase, setPhase] = useState<WizardPhase>('questions')
   const [answers, setAnswers] = useState<BriefingAnswers>(EMPTY_ANSWERS)
@@ -88,7 +94,13 @@ export function BriefingWizard() {
       referencia:   extras.referencia?.trim() || null,
     }
 
+    // O id nasce aqui para o servidor anexar o rascunho a este lead depois
+    const leadId = crypto.randomUUID()
+    sessionStorage.setItem('sv_lead', JSON.stringify({ id: leadId, email: email.trim() }))
+    trackEvent('briefing_enviado')
+
     createLead({
+      id: leadId,
       email: email.trim(),
       whatsapp: whatsapp.trim() || null,
       ...answers,
@@ -129,12 +141,14 @@ export function BriefingWizard() {
     setTouched(false)
 
     if (isLast) {
+      trackEvent('etapa_concluida', { etapa: step + 1 })
       setPhase('extras')
       return
     }
 
+    trackEvent('etapa_concluida', { etapa: step + 1 })
     setStep((s) => s + 1)
-  }, [phase, isLastExtra, isValid, isLast, submitLead])
+  }, [phase, isLastExtra, isValid, isLast, submitLead, step])
 
   const goBack = useCallback(() => {
     setTouched(false)
