@@ -1,29 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  // Não derruba o app — só avisa em dev. Em produção, configure o .env antes do deploy.
-  // eslint-disable-next-line no-console
-  console.warn(
-    '[supabase] NEXT_PUBLIC_SUPABASE_URL ou NEXT_PUBLIC_SUPABASE_ANON_KEY ausentes. ' +
-    'O registro de leads não vai funcionar até isso ser configurado.'
-  )
-}
+import { SAMPA_CONFIG } from './sampaConfig'
+import { insertLead } from './sampaAnalytics'
 
 /**
- * Client público (anon key). Usado só no browser, só para:
- *  - inserir um novo lead (briefing + contato) assim que o wizard é enviado
- *
- * A leitura (SELECT) é bloqueada por RLS para o papel `anon` — consulte os
- * leads direto pelo painel do Supabase (Table Editor) usando sua conta,
- * não pela API pública.
+ * Client público do Sampa-Core, já apontado para o schema `vision`.
+ * O papel `anon` só tem INSERT em vision.leads e vision.events: a leitura é bloqueada
+ * por RLS e grants. Consulte os leads pelo painel do Supabase (Table Editor), não pela API pública.
  */
-// Desde a consolidação no Sampa-Core, as tabelas do Sampa Vision ficam no schema `vision`
-// (vision.leads, vision.events). O schema precisa estar em Data API > Exposed schemas.
-export const supabase = createClient(supabaseUrl ?? '', supabaseAnonKey ?? '', {
+export const supabase = createClient(SAMPA_CONFIG.url, SAMPA_CONFIG.key, {
   db: { schema: 'vision' },
+  auth: { persistSession: false },
 })
 
 export interface LeadInsert {
@@ -36,10 +22,10 @@ export interface LeadInsert {
   beneficios: string
   oferta: string
   cta: string
-  // Extensão opcional (LandingBriefingContract §10) — não faz parte
-  // dos 7 campos canônicos, só enriquece o prompt quando presente.
+  // Extensão opcional (LandingBriefingContract §10)
   concorrentes?: string | null
   referencia?: string | null
+  // Preenchidos automaticamente por insertLead (origem = 'app', UTMs, sessão, página)
   origem?: string | null
   utm_source?: string | null
   utm_campaign?: string | null
@@ -52,14 +38,16 @@ export interface LeadRow extends LeadInsert {
   status: 'aguardando_refinamento' | 'em_producao' | 'entregue'
 }
 
-/** Grava o lead assim que o briefing é enviado — antes mesmo da IA rodar. */
+/**
+ * Grava o lead assim que o briefing é enviado — antes mesmo da IA rodar.
+ * Agora em vision.leads (Sampa-Core), com origem 'app' e atribuição completa,
+ * e registra lead_created / lead_error em vision.events.
+ */
 export async function createLead(input: LeadInsert): Promise<void> {
-  const { error } = await supabase
-    .from('leads')
-    .insert(input)
-
-  if (error) {
+  // insertLead força origem = 'app' e acrescenta UTMs, sessão e página
+  const result = await insertLead({ ...input })
+  if (!result.ok) {
     // eslint-disable-next-line no-console
-    console.error('[supabase] Falha ao gravar lead:', error.message)
+    console.error('[supabase] Falha ao gravar lead:', result.error)
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import SampaAnalytics from '@/components/analytics/SampaAnalytics'
 
 // ── FONTE INTER via next/font (otimizado, sem CLS) ───────────────────────
 const inter = Inter({
@@ -135,6 +136,7 @@ export default function RootLayout({
         </a>
 
         {children}
+        <SampaAnalytics />
       </body>
     </html>
   )

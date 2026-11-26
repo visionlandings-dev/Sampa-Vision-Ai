@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react'
 import type { BriefingAnswers, BriefingExtras, GeneratedPage, GenerationEvent } from '@/types'
+import { sendEvent } from '@/lib/sampaAnalytics'
 
 interface GenerateState {
   status: 'idle' | 'generating' | 'done' | 'error'
@@ -34,6 +35,8 @@ export function useGeneratePage() {
     abortRef.current = controller
 
     setState({ ...INITIAL_STATE, status: 'generating' })
+    const startedAt = performance.now()
+    sendEvent('generate_start')
 
     try {
       const res = await fetch('/api/generate', {
@@ -73,8 +76,10 @@ export function useGeneratePage() {
           handleEvent(event, setState)
         }
       }
+      sendEvent('generate_complete', null, { duracao_ms: Math.round(performance.now() - startedAt) })
     } catch (err) {
       if (controller.signal.aborted) return
+      sendEvent('generate_error', null, { mensagem: err instanceof Error ? err.message.slice(0, 200) : 'conexao' })
       const message = err instanceof Error ? err.message : 'Erro de conexão.'
       setState((s) => ({ ...s, status: 'error', error: message }))
     }
