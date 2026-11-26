@@ -34,7 +34,7 @@ isso é proposital: pressão de fila deve aparecer cedo, não só perto do prazo
 |---|---|
 | Tempo por etapa | Diferença entre `created_at` → mudança para `em_producao` → `delivered_at`. Sem automação ainda: anotar manualmente ou olhar o histórico de edições no Table Editor. |
 | Acurácia do briefing | Quantas vezes a equipe precisou pedir mais contexto ou refazer uma seção do rascunho gerado. Registrar em `leads.notes`. |
-| Fila em aberto | `SELECT count(*) FROM leads WHERE status = 'aguardando_refinamento'` — rodar direto no SQL Editor do Supabase. |
+| Fila em aberto | `SELECT count(*) from vision.leads WHERE status = 'aguardando_refinamento'` — rodar direto no SQL Editor do Supabase. |
 
 ### Lagging (medem o resultado, olhadas em retrospectiva/semanal)
 
@@ -59,23 +59,46 @@ select
     ) / nullif(count(*) filter (where delivered_at is not null), 0),
     1
   ) as percentual_dentro_do_sla
-from leads
+from vision.leads
 where created_at >= now() - interval '30 days';
 ```
 
-## 4. Fluxo operacional (usa o runbook manual já existente)
+## 4. Fluxo operacional (atualizado em 26/11/2026)
 
-```text
-1. Novo lead                    → status: aguardando_refinamento
-2. Equipe pega o lead            → status: em_producao
-3. Refina o rascunho (draft_page)
-4. Publica onde for mais rápido hoje (fora do app — Framer, template
-   próprio, ou o que a equipe já souber usar bem)
-5. Preenche leads.final_url com o link publicado
-6. Envia e-mail manual ao cliente com o link
-7. Preenche leads.delivered_at (now())
-8. status: entregue
-```
+Os dados ficam no projeto Supabase **Sampa-Core**, schema `vision` (`vision.leads`,
+`vision.generation_events`, `vision.events`). Os avisos saem de
+`avisos@notify.sampa.vision` pela Resend, disparados pelo banco.
+
+| # | Etapa | Quem / o quê | Status |
+|---|---|---|---|
+| 1 | Visitante envia o briefing; o navegador grava o lead com um `id` próprio | App | `aguardando_refinamento` |
+| 2 | **Aviso "Novo lead"** com o briefing completo → `leads@app.sampa.vision` (ou `leads@try.sampa.vision` se `origem = try`) | Gatilho `on_lead_insert` | — |
+| 3 | A IA gera o rascunho; o servidor grava `draft_page` e `rascunho_salvo_em` | `/api/generate` (chave de serviço) | — |
+| 4 | **Aviso "Rascunho pronto"** com `rascunho.html` (prévia) e `rascunho.json` → `draft@app.sampa.vision` | Gatilho `on_draft_saved` | — |
+| 5 | Equipe revisa briefing + rascunho e assume o lead | Equipe | `em_producao` |
+| 6 | Produz e publica a página final; preenche `final_url` | Equipe | `em_producao` |
+| 7 | Envia o link ao cliente; preenche `delivered_at` (now()) | Equipe | `entregue` |
+
+Prazo: **72 h** entre `created_at` e `delivered_at`.
+
+### 4.1 Quando algo falha (o lead nunca se perde)
+
+O lead é gravado **antes** da geração. Se a IA falhar, o briefing já está no banco.
+
+- **Geração com erro** (chave da Anthropic, tempo esgotado, resposta inválida): o servidor grava
+  `generation_events.status = failed` com o erro → **alerta imediato** em `draft@sampa.vision`.
+- **Lead do app sem rascunho após 1 h** (ex.: o visitante fechou a aba durante a geração): a rotina
+  `vision-alerta-sem-rascunho` (pg_cron, a cada 15 min) envia alerta para `draft@sampa.vision`
+  e marca `alerta_sem_rascunho_em`.
+- Nos dois casos a equipe produz a página **a partir do briefing**, seguindo os passos 5 a 7.
+
+### 4.2 Acompanhamento
+
+- **Dashboard interno** da fila (status, idade, prazo de 72 h, rascunho sim/não), atualizado a cada 2 h,
+  das 8h às 20h, em dias úteis. E-mails aparecem mascarados (LGPD).
+- **Relatório diário às 08:00** em `leads@sampa.vision`: abandono do briefing (`vision.events`),
+  fila e prazos vencendo.
+- Leads de teste: marcar `notes` começando com `[TESTE]` — ficam fora de avisos e relatórios.
 
 ## 5. O que fica de fora, por decisão explícita
 
