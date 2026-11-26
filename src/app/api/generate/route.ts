@@ -8,6 +8,7 @@ import {
   validateBriefing,
 } from '@/lib/claude'
 import type { BriefingAnswers, BriefingExtras, GenerationEvent } from '@/types'
+import { parseLeadRef, saveDraft, logGeneration, type LeadRef } from '@/lib/supabase-admin'
 
 // Este endpoint roda em ambiente Node (não Edge) porque o SDK da Anthropic
 // depende de APIs do Node. Streaming continua funcionando normalmente.
@@ -28,11 +29,14 @@ export const maxDuration = 60
 export async function POST(req: NextRequest) {
   let answers: BriefingAnswers
   let extras: BriefingExtras | undefined
+  let lead: LeadRef | null = null
 
   try {
     const body = await req.json()
     answers = body.answers
     extras = body.extras
+    // id + e-mail do lead gravado pelo navegador (sessionStorage sv_lead)
+    lead = parseLeadRef(body.lead)
   } catch {
     return jsonError('Briefing inválido. Verifique os dados enviados.', 400)
   }
@@ -83,10 +87,14 @@ export async function POST(req: NextRequest) {
         const elapsedMs = Date.now() - startedAt
 
         send({ type: 'status', step: 'publishing', label: 'Finalizando rascunho...' })
+        // Grava o rascunho no lead antes de entregar ao visitante. Não lança erro.
+        await saveDraft(lead, page, elapsedMs, CLAUDE_MODEL)
         send({ type: 'complete', page, elapsedMs })
       } catch (err) {
         const message =
           err instanceof Error ? err.message : 'Erro inesperado ao gerar a página.'
+        // Registra a falha: dispara o alerta para draft@sampa.vision.
+        await logGeneration(lead, 'failed', Date.now() - startedAt, CLAUDE_MODEL, message)
         send({ type: 'error', message })
       } finally {
         controller.close()
